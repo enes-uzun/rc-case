@@ -1,6 +1,7 @@
 import openai
 import json
 import asyncio
+import re
 from typing import List, Dict, Optional
 from datetime import datetime
 import os
@@ -41,6 +42,40 @@ class AIAnalysisRequest(BaseModel):
     company_data: CompanyData
     analysis_type: str = "full"  # "sentiment", "insights", "trends", "full"
 
+# JSON extraction helper function
+def extract_json_from_response(response_text: str) -> Dict:
+    """
+    OpenAI response'undan JSON'ı çıkarır. Markdown kod blokları ve diğer formatları handle eder.
+    """
+    try:
+        # İlk önce direkt parse etmeyi dene
+        return json.loads(response_text)
+    except json.JSONDecodeError:
+        pass
+    
+    # Markdown kod bloğu içindeki JSON'ı bul
+    json_pattern = r'```(?:json)?\s*(\{.*?\})\s*```'
+    match = re.search(json_pattern, response_text, re.DOTALL | re.IGNORECASE)
+    
+    if match:
+        try:
+            return json.loads(match.group(1))
+        except json.JSONDecodeError:
+            pass
+    
+    # Sadece {} içindeki kısmı al
+    brace_pattern = r'\{.*\}'
+    match = re.search(brace_pattern, response_text, re.DOTALL)
+    
+    if match:
+        try:
+            return json.loads(match.group(0))
+        except json.JSONDecodeError:
+            pass
+    
+    # Hiçbir şey bulamazsa hata fırlat
+    raise json.JSONDecodeError(f"No valid JSON found in response: {response_text[:200]}...", response_text, 0)
+
 class CompetitorAIAnalyzer:
     def __init__(self, api_key: str):
         openai.api_key = api_key
@@ -77,7 +112,7 @@ class CompetitorAIAnalyzer:
                     max_tokens=200
                 )
                 
-                ai_result = json.loads(response.choices[0].message.content)
+                ai_result = extract_json_from_response(response.choices[0].message.content)
                 
                 results.append({
                     "title": news.title,
@@ -159,7 +194,7 @@ class CompetitorAIAnalyzer:
                 max_tokens=1500
             )
             
-            insights = json.loads(response.choices[0].message.content)
+            insights = extract_json_from_response(response.choices[0].message.content)
             insights["generated_at"] = datetime.now().isoformat()
             insights["company"] = company_data.name
             

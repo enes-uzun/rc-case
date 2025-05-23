@@ -1,0 +1,133 @@
+{
+  "bluedot": {
+    "name": "Bluedot",
+    "status": "Private",
+    "funding": "$5 million (as of June 2023)",
+    "employees": "42 (estimated)",
+    "founded": "2021",
+    "headquarters": "San Francisco, US",
+    "description": "Bluedot is a payment platform for electric vehicle (EV) drivers and fleets. The company provides a universal charging payment and rewards platform that helps individual drivers and fleet owners manage charge schedules, statistics, and maintenance remotely. Their platform enables users to track real-time availability of EV charging stations and streamlines access to public charging infrastructure.",
+    "recentDevelopments": [
+      {
+        "date": "May 2025",
+        "title": "Partnership with Rivian",
+        "description": "Bluedot now supports Rivian's Mobile Service fleet operations by streamlining access to chargers, automating reimbursement, and simplifying tracking."
+      },
+      {
+        "date": "April 2025",
+        "title": "Launch of Bluedot Shared",
+        "description": "Bluedot launched Bluedot Shared, a service that unlocks private fleet depots to broaden EV charging access, ensuring fleets gain consistent, reliable depot charging access while offering infrastructure owners increased utilization."
+      },
+      {
+        "date": "2024",
+        "title": "Partnership with Verra Mobility",
+        "description": "Verra Mobility partnered with Bluedot to offer electric vehicle charging solutions, consolidating billing across different networks."
+      }
+    ],
+    "competitors": [
+      {
+        "name": "TradeStation",
+        "status": "Private",
+        "description": "A company that provides trading technology and online electronic brokerage services."
+      },
+      {
+        "name": "Vajro",
+        "status": "Private",
+        "description": "A mobile app platform that builds eCommerce sites."
+      },
+      {
+        "name": "REX",
+        "status": "Private",
+        "description": "An online recommendations platform that enables users to find places and things recommended by people they trust."
+      },
+      {
+        "name": "Logix Net Solutions",
+        "status": "Private",
+        "description": "A company that provides communications and information technology (ICT) networks solutions."
+      },
+      {
+        "name": "EV Connect",
+        "status": "Private",
+        "description": "Provider of EV charging management solutions."
+      },
+      {
+        "name": "ChargeHub",
+        "status": "Private",
+        "description": "Platform for finding and accessing EV charging stations."
+      },
+      {
+        "name": "GreenFlux",
+        "status": "Private",
+        "description": "Provider of EV charging management software."
+      }
+    ]
+  },
+  "massiveBio": {
+    "name": "Massive Bio",
+    "status": "Private",
+    "funding": "$15.6 million",
+    "employees": "25-100",
+    "founded": "2014",
+    "headquarters": "New York, NY, United States",
+    "description": "Massive Bio is an AI-driven platform that provides clinical trial matching and cancer analysis solutions for the biopharmaceutical industry. The company uses artificial intelligence to connect cancer patients with appropriate clinical trials regardless of their location or finances, bringing together physicians, drug developers, hospitals, and genomic companies.",
+    "recentDevelopments": [
+      {
+        "date": "January 2025",
+        "title": "White House Cancer Moonshot Recognition",
+        "description": "Massive Bio was recognized by the White House Cancer Moonshot for its first-of-their-kind pre-screening hubs and AI-powered trial matching. The company launched a $15 million initiative at JPM 2025."
+      },
+      {
+        "date": "February 2025",
+        "title": "Commitment to Cancer Research",
+        "description": "Massive Bio reaffirmed its commitment to bridging gaps in cancer research and ensuring patient access to cutting-edge clinical trials amid NIH funding uncertainty."
+      },
+      {
+        "date": "April 2025",
+        "title": "Partnership with Flatiron Health",
+        "description": "Massive Bio partnered with Flatiron Health to improve clinical trial access, allowing Flatiron to use Massive Bio's database to match oncology patients to clinical trials within their proximity."
+      },
+      {
+        "date": "September 2024",
+        "title": "Partnership with Foundation Medicine",
+        "description": "Massive Bio partnered with Foundation Medicine to optimize clinical trial recruitment and enrollment, developing integrated solutions using shared data and AI analytics focused on patient matching."
+      },
+      {
+        "date": "September 2024",
+        "title": "Launch of Patient Connect",
+        "description": "Massive Bio launched Patient Connect, a free portal aimed at personalizing access to cancer clinical trials worldwide."
+      }
+    ],
+    "competitors": [
+      {
+        "name": "Deep 6 AI",
+        "status": "Private",
+        "description": "Specializes in clinical trials through advanced artificial intelligence and natural language processing technologies."
+      },
+      {
+        "name": "Elligo Health Research",
+        "status": "Private",
+        "description": "Provides clinical research infrastructure to healthcare clinics."
+      },
+      {
+        "name": "Ancora",
+        "status": "Private",
+        "description": "Offers clinical trial solutions."
+      },
+      {
+        "name": "TrialJectory",
+        "status": "Private",
+        "description": "Matches cancer patients with clinical trials."
+      },
+      {
+        "name": "Antidote",
+        "status": "Private",
+        "description": "Provides clinical trial matching services."
+      },
+      {
+        "name": "Oncoshot",
+        "status": "Private",
+        "description": "Focuses on cancer clinical trials."
+      }
+    ]
+  }
+}

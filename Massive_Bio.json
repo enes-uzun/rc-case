@@ -1,0 +1,37 @@
+{
+    "name": "Massive Bio",
+    "status": "Private",
+    "funding": "$15.6 million (based on Owler data)",
+    "investors": "To be researched",
+    "employees": "25-100 (based on Owler data)",
+    "founded": "2014 (based on Owler data)",
+    "headquarters": "New York, NY, United States",
+    "description": "Massive Bio is an AI-driven platform that provides clinical trial matching and cancer analysis solutions for the biopharmaceutical industry. The company uses artificial intelligence to connect cancer patients with appropriate clinical trials regardless of their location or finances, bringing together physicians, drug developers, hospitals, and genomic companies.",
+    "recent_developments": [
+        {
+            "date": "January 2025",
+            "title": "White House Cancer Moonshot Recognition",
+            "description": "Massive Bio was recognized by the White House Cancer Moonshot for its first-of-their-kind pre-screening hubs and AI-powered trial matching. The company launched a $15 million initiative at JPM 2025."
+        },
+        {
+            "date": "February 2025",
+            "title": "Commitment to Cancer Research",
+            "description": "Massive Bio reaffirmed its commitment to bridging gaps in cancer research and ensuring patient access to cutting-edge clinical trials amid NIH funding uncertainty."
+        },
+        {
+            "date": "April 2025",
+            "title": "Partnership with Flatiron Health",
+            "description": "Massive Bio partnered with Flatiron Health to improve clinical trial access, allowing Flatiron to use Massive Bio's database to match oncology patients to clinical trials within their proximity."
+        },
+        {
+            "date": "September 2024",
+            "title": "Partnership with Foundation Medicine",
+            "description": "Massive Bio partnered with Foundation Medicine to optimize clinical trial recruitment and enrollment, developing integrated solutions using shared data and AI analytics focused on patient matching."
+        },
+        {
+            "date": "September 2024",
+            "title": "Launch of Patient Connect",
+            "description": "Massive Bio launched Patient Connect, a free portal aimed at personalizing access to cancer clinical trials worldwide."
+        }
+    ]
+}

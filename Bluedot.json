@@ -1,0 +1,27 @@
+{
+    "name": "Bluedot",
+    "status": "Private",
+    "funding": "$5 million (as of June 2023)",
+    "investors": "To be researched",
+    "employees": "To be researched",
+    "founded": "2021 (based on Craft.co data)",
+    "headquarters": "San Francisco, US",
+    "description": "Bluedot is a payment platform for electric vehicle (EV) drivers and fleets. The company provides a universal charging payment and rewards platform that helps individual drivers and fleet owners manage charge schedules, statistics, and maintenance remotely. Their platform enables users to track real-time availability of EV charging stations and streamlines access to public charging infrastructure.",
+    "recent_developments": [
+        {
+            "date": "May 2025",
+            "title": "Partnership with Rivian",
+            "description": "Bluedot now supports Rivian's Mobile Service fleet operations by streamlining access to chargers, automating reimbursement, and simplifying tracking."
+        },
+        {
+            "date": "April 2025",
+            "title": "Launch of Bluedot Shared",
+            "description": "Bluedot launched Bluedot Shared, a service that unlocks private fleet depots to broaden EV charging access, ensuring fleets gain consistent, reliable depot charging access while offering infrastructure owners increased utilization."
+        },
+        {
+            "date": "2024",
+            "title": "Partnership with Verra Mobility",
+            "description": "Verra Mobility partnered with Bluedot to offer electric vehicle charging solutions, consolidating billing across different networks."
+        }
+    ]
+}

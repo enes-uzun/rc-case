@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card";
-import { Badge } from "./badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./src/components/ui/tabs";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./src/components/ui/card";
+import { Badge } from "./src/components/ui/badge";
 import './index.css';
 
 interface NewsItem {
@@ -317,8 +317,12 @@ function NewsCard({ news, theme }: { news: NewsItem; theme: 'blue' | 'green' }) 
 }
 
 function CompetitorCard({ competitor, theme }: { competitor: CompetitorData; theme: 'blue' | 'green' }) {
+  const [isExpanded, setIsExpanded] = React.useState(false);
   const newsCount = competitor.news.length;
   const badgeColor = theme === 'blue' ? 'bg-blue-500' : 'bg-green-500';
+  
+  const displayedNews = isExpanded ? competitor.news : competitor.news.slice(0, 2);
+  const remainingCount = newsCount - 2;
   
   return (
     <Card className="h-full">
@@ -331,7 +335,7 @@ function CompetitorCard({ competitor, theme }: { competitor: CompetitorData; the
       <CardContent>
         {newsCount > 0 ? (
           <div className="space-y-2">
-            {competitor.news.slice(0, 2).map((news, index) => (
+            {displayedNews.map((news, index) => (
               <div key={index} className="text-sm">
                 <a 
                   href={news.link} 
@@ -345,9 +349,15 @@ function CompetitorCard({ competitor, theme }: { competitor: CompetitorData; the
               </div>
             ))}
             {newsCount > 2 && (
-              <p className="text-xs text-gray-500 font-medium">
-                +{newsCount - 2} daha fazla haber
-              </p>
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="text-xs text-blue-500 hover:text-blue-700 font-medium cursor-pointer hover:underline w-full text-left"
+              >
+                {isExpanded 
+                  ? '▲ Daha az göster' 
+                  : `▼ +${remainingCount} daha fazla haber göster`
+                }
+              </button>
             )}
           </div>
         ) : (

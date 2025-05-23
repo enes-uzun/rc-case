@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card";
-import { Badge } from "./badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./src/components/ui/card";
+import { Badge } from "./src/components/ui/badge";
 
 interface NewsItem {
   title: string;
@@ -174,7 +174,11 @@ function NewsCard({ news }: { news: NewsItem }) {
 }
 
 function CompetitorCard({ competitor }: { competitor: CompetitorData }) {
+  const [isExpanded, setIsExpanded] = React.useState(false);
   const newsCount = competitor.news.length;
+  
+  const displayedNews = isExpanded ? competitor.news : competitor.news.slice(0, 2);
+  const remainingCount = newsCount - 2;
   
   return (
     <Card className="h-full">
@@ -187,7 +191,7 @@ function CompetitorCard({ competitor }: { competitor: CompetitorData }) {
       <CardContent>
         {newsCount > 0 ? (
           <div className="space-y-2">
-            {competitor.news.slice(0, 2).map((news, index) => (
+            {displayedNews.map((news, index) => (
               <div key={index} className="text-sm">
                 <a 
                   href={news.link} 
@@ -201,9 +205,15 @@ function CompetitorCard({ competitor }: { competitor: CompetitorData }) {
               </div>
             ))}
             {newsCount > 2 && (
-              <p className="text-xs text-gray-500">
-                +{newsCount - 2} daha fazla haber
-              </p>
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="text-xs text-blue-500 hover:text-blue-700 font-medium cursor-pointer hover:underline w-full text-left"
+              >
+                {isExpanded 
+                  ? '▲ Daha az göster' 
+                  : `▼ +${remainingCount} daha fazla haber göster`
+                }
+              </button>
             )}
           </div>
         ) : (

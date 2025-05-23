@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./src/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./src/components/ui/card";
 import { Badge } from "./src/components/ui/badge";
+import { AIInsights } from "./src/components/ai/AIInsights";
+import { AIEnhancedNewsCard } from "./src/components/ai/AIEnhancedNewsCard";
 import './index.css';
 
 interface NewsItem {
@@ -218,23 +220,34 @@ function CompanyDashboard({ company, theme, description }: CompanyDashboardProps
         </CardContent>
       </Card>
 
-      {/* Recent News */}
+      {/* AI Insights - NEW SECTION */}
+      <AIInsights companyData={company} theme={theme} />
+
+      {/* Recent News with AI Enhancement */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            📰 {company.name} - Son Haberler 
+            📰 {company.name} - AI-Enhanced Haberler 
             <Badge className={`ml-2 ${colors.bg} text-white`}>
               {company.news.length} haber
             </Badge>
+            <Badge className="ml-2 bg-purple-600 text-white">
+              🤖 AI Powered
+            </Badge>
           </CardTitle>
           <CardDescription>
-            Gerçek zamanlı haber takibi - Google Custom Search API
+            Yapay zeka destekli sentiment analizi ile gerçek zamanlı haber takibi
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {company.news.slice(0, 8).map((news, index) => (
-              <NewsCard key={index} news={news} theme={theme} />
+              <AIEnhancedNewsCard 
+                key={index} 
+                news={news} 
+                theme={theme}
+                enableAI={true}
+              />
             ))}
           </div>
         </CardContent>

@@ -19,8 +19,6 @@
   ],
   "routes": [
     { "src": "/api/test", "dest": "/api/test.py" },
-    { "src": "/api/ai/(.*)", "dest": "/api/ai_service.py" },
-    { "src": "/", "dest": "/api/ai_service.py" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 } 

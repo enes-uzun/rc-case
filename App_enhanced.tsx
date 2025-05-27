@@ -44,7 +44,7 @@ function App() {
   const loadCompanyData = async () => {
     try {
       // all_company_data.json dosyasını yükle
-      const response = await fetch('./all_company_data.json');
+      const response = await fetch('/all_company_data.json');
       if (!response.ok) {
         throw new Error('Veri dosyası bulunamadı');
       }
@@ -292,9 +292,6 @@ function MetricCard({ title, value, subtitle, color }: {
     </div>
   );
 }
-
-
-
 
 function CompetitorCard({ competitor, theme }: { competitor: CompetitorData; theme: 'blue' | 'green' }) {
   const [isExpanded, setIsExpanded] = React.useState(false);

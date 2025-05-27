@@ -9,14 +9,14 @@
       }
     },
     {
-      "src": "./ai_service.py",
+      "src": "./test_api.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "./ai_service.py"
+      "src": "/api/test",
+      "dest": "./test_api.py"
     },
     {
       "handle": "filesystem"

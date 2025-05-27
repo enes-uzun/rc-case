@@ -2,29 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "./package.json",
+      "src": "package.json",
       "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "config": { "distDir": "dist" }
     },
     {
-      "src": "./test_api.py",
+      "src": "api/test_api.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+      "config": { "runtime": "python3.9" }
     }
   ],
   "routes": [
-    {
-      "src": "/api/test",
-      "dest": "./test_api.py"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "./index.html"
-    }
+    { "src": "/api/test", "dest": "/api/test_api.py" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 } 

@@ -1,3 +1,4 @@
+print("--- Python script ai_service.py STARTING TO LOAD ---")
 import openai
 import json
 import asyncio
@@ -214,43 +215,54 @@ class CompetitorAIAnalyzer:
 
 # Global analyzer instance
 analyzer = None
+print("--- Global analyzer initialized to None ---")
 
 @app.on_event("startup")
 async def startup_event():
     global analyzer
-    # OpenAI API anahtarını environment variable'dan al
+    print("--- startup_event TRIGGERED ---")
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        # Fallback to hardcoded key for development
-        api_key = "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"
-        print("💡 Using hardcoded API key for development")
+        print("--- startup_event: OpenAI API key NOT FOUND in env vars. Using fallback. ---")
+        api_key = "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" # Bu anahtar muhtemelen geçersiz
+    else:
+        print(f"--- startup_event: OpenAI API key FOUND in env vars, starting with: {api_key[:8]}...")
     
     if api_key:
-        analyzer = CompetitorAIAnalyzer(api_key)
-        print("✅ AI Analyzer initialized successfully!")
+        try:
+            analyzer = CompetitorAIAnalyzer(api_key)
+            print("--- startup_event: CompetitorAIAnalyzer INITIALIZED SUCCESSFULLY ---")
+        except Exception as e:
+            print(f"--- startup_event: ERROR initializing CompetitorAIAnalyzer: {str(e)} ---")
+            analyzer = None
     else:
-        print("❌ No API key found!")
+        print("--- startup_event: No API key available, analyzer remains None ---")
+        analyzer = None
 
 @app.get("/")
 async def root():
+    print(f"--- Request to / received. Analyzer is: {'SET' if analyzer else 'NOT SET'} ---")
     return {"message": "Competitor AI Analysis Service", "status": "running", "version": "1.0.0"}
 
 @app.post("/api/ai/analyze-sentiment")
 async def analyze_sentiment(news_items: List[NewsItem]):
-    """News sentiment analysis endpoint"""
+    print(f"--- Request to /api/ai/analyze-sentiment received. Analyzer is: {'SET' if analyzer else 'NOT SET'} ---")
     if not analyzer:
+        print("--- analyze_sentiment: Analyzer is NOT SET. Raising 503. ---")
         raise HTTPException(status_code=503, detail="AI service not available - check API key")
     
     try:
         results = await analyzer.analyze_news_sentiment(news_items)
         return {"success": True, "data": results, "count": len(results)}
     except Exception as e:
+        print(f"--- analyze_sentiment: ERROR during analysis: {str(e)} ---")
         raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
 
 @app.post("/api/ai/generate-insights")
 async def generate_insights(request: AIAnalysisRequest):
-    """Weekly insights generation endpoint"""
+    print(f"--- Request to /api/ai/generate-insights received. Analyzer is: {'SET' if analyzer else 'NOT SET'} ---")
     if not analyzer:
+        print("--- generate_insights: Analyzer is NOT SET. Raising 503. ---")
         raise HTTPException(status_code=503, detail="AI service not available - check API key")
     
     try:
@@ -261,8 +273,9 @@ async def generate_insights(request: AIAnalysisRequest):
 
 @app.post("/api/ai/full-analysis")
 async def full_analysis(request: AIAnalysisRequest):
-    """Comprehensive AI analysis endpoint"""
+    print(f"--- Request to /api/ai/full-analysis received. Analyzer is: {'SET' if analyzer else 'NOT SET'} ---")
     if not analyzer:
+        print("--- full_analysis: Analyzer is NOT SET. Raising 503. ---")
         raise HTTPException(status_code=503, detail="AI service not available - check API key")
     
     try:
@@ -282,6 +295,8 @@ async def full_analysis(request: AIAnalysisRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Full analysis failed: {str(e)}")
+
+print("--- Python script ai_service.py LOADED ---")
 
 # if __name__ == "__main__":
 #     import uvicorn

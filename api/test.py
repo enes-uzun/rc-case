@@ -7,4 +7,4 @@ app = FastAPI()
 # Şimdilik en basit haliyle kök endpoint yapalım.
 @app.get("/")
 async def handle_all():
-    return {"message": "Test API endpoint from /api/test in api/test_api.py"}
+    return {"message": "Test API endpoint from /api/test in api/test.py"}

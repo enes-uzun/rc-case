@@ -214,77 +214,86 @@ class CompetitorAIAnalyzer:
             }
 
 # Global analyzer instance
-analyzer = None
+analyzer: Optional[CompetitorAIAnalyzer] = None
 print("--- Global analyzer initialized to None ---")
 
-@app.on_event("startup")
-async def startup_event():
+# Analyzer'ı initialize eden yardımcı fonksiyon
+async def get_analyzer() -> CompetitorAIAnalyzer:
     global analyzer
-    print("--- startup_event TRIGGERED ---")
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        print("--- startup_event: OpenAI API key NOT FOUND in env vars. Using fallback. ---")
-        api_key = "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" # Bu anahtar muhtemelen geçersiz
-    else:
-        print(f"--- startup_event: OpenAI API key FOUND in env vars, starting with: {api_key[:8]}...")
+    if analyzer is None:
+        print("--- get_analyzer: Analyzer is None, attempting to initialize. ---")
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            print("--- get_analyzer: OpenAI API key NOT FOUND in env vars. Using fallback. ---")
+            api_key = "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" # Geçersiz olabilir
+        else:
+            print(f"--- get_analyzer: OpenAI API key FOUND in env vars, starting with: {api_key[:8]}...")
+        
+        if api_key:
+            try:
+                analyzer = CompetitorAIAnalyzer(api_key)
+                print("--- get_analyzer: CompetitorAIAnalyzer INITIALIZED SUCCESSFULLY ---")
+            except Exception as e:
+                print(f"--- get_analyzer: ERROR initializing CompetitorAIAnalyzer: {str(e)} ---")
+                # Hata durumunda analyzer None kalacak, bu da 503'e yol açacak
+                raise HTTPException(status_code=503, detail=f"AI service initialization failed: {str(e)}") # İstek burada kesilsin
+        else:
+            print("--- get_analyzer: No API key available, analyzer cannot be initialized. ---")
+            raise HTTPException(status_code=503, detail="AI service not available - API key missing")
     
-    if api_key:
-        try:
-            analyzer = CompetitorAIAnalyzer(api_key)
-            print("--- startup_event: CompetitorAIAnalyzer INITIALIZED SUCCESSFULLY ---")
-        except Exception as e:
-            print(f"--- startup_event: ERROR initializing CompetitorAIAnalyzer: {str(e)} ---")
-            analyzer = None
-    else:
-        print("--- startup_event: No API key available, analyzer remains None ---")
-        analyzer = None
+    if analyzer is None: # Yukarıdaki initialization başarısız olduysa
+         raise HTTPException(status_code=503, detail="AI service could not be initialized.")
+
+    return analyzer
+
+# Startup event'ini şimdilik kaldırıyoruz veya yorumluyoruz
+# @app.on_event("startup")
+# async def startup_event():
+#     pass # Artık burada bir şey yapmıyoruz
+
+print("--- startup_event (veya eşdeğeri) ŞİMDİLİK DEVRE DIŞI BIRAKILDI ---")
 
 @app.get("/")
 async def root():
-    print(f"--- Request to / received. Analyzer is: {'SET' if analyzer else 'NOT SET'} ---")
+    # Bu endpoint için analyzer'a gerek olmayabilir, ama test için loglayabiliriz.
+    # local_analyzer = await get_analyzer() # Eğer gerekirse
+    print(f"--- Request to / received. Global analyzer is initially: {'SET' if analyzer else 'NOT SET'} ---")
     return {"message": "Competitor AI Analysis Service", "status": "running", "version": "1.0.0"}
 
 @app.post("/api/ai/analyze-sentiment")
 async def analyze_sentiment(news_items: List[NewsItem]):
-    print(f"--- Request to /api/ai/analyze-sentiment received. Analyzer is: {'SET' if analyzer else 'NOT SET'} ---")
-    if not analyzer:
-        print("--- analyze_sentiment: Analyzer is NOT SET. Raising 503. ---")
-        raise HTTPException(status_code=503, detail="AI service not available - check API key")
-    
+    local_analyzer = await get_analyzer()
+    print(f"--- Request to /api/ai/analyze-sentiment. Analyzer obtained. ---")
     try:
-        results = await analyzer.analyze_news_sentiment(news_items)
+        results = await local_analyzer.analyze_news_sentiment(news_items)
         return {"success": True, "data": results, "count": len(results)}
     except Exception as e:
         print(f"--- analyze_sentiment: ERROR during analysis: {str(e)} ---")
+        # get_analyzer içinde zaten HTTPException fırlatılıyor ama burada da yakalayabiliriz
+        if isinstance(e, HTTPException):
+            raise e
         raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
 
 @app.post("/api/ai/generate-insights")
 async def generate_insights(request: AIAnalysisRequest):
-    print(f"--- Request to /api/ai/generate-insights received. Analyzer is: {'SET' if analyzer else 'NOT SET'} ---")
-    if not analyzer:
-        print("--- generate_insights: Analyzer is NOT SET. Raising 503. ---")
-        raise HTTPException(status_code=503, detail="AI service not available - check API key")
-    
+    local_analyzer = await get_analyzer()
+    print(f"--- Request to /api/ai/generate-insights. Analyzer obtained. ---")
     try:
-        insights = await analyzer.generate_weekly_insights(request.company_data)
+        insights = await local_analyzer.generate_weekly_insights(request.company_data)
         return {"success": True, "data": insights}
     except Exception as e:
+        print(f"--- generate_insights: ERROR during analysis: {str(e)} ---")
+        if isinstance(e, HTTPException):
+            raise e
         raise HTTPException(status_code=500, detail=f"Insights generation failed: {str(e)}")
 
 @app.post("/api/ai/full-analysis")
 async def full_analysis(request: AIAnalysisRequest):
-    print(f"--- Request to /api/ai/full-analysis received. Analyzer is: {'SET' if analyzer else 'NOT SET'} ---")
-    if not analyzer:
-        print("--- full_analysis: Analyzer is NOT SET. Raising 503. ---")
-        raise HTTPException(status_code=503, detail="AI service not available - check API key")
-    
+    local_analyzer = await get_analyzer()
+    print(f"--- Request to /api/ai/full-analysis. Analyzer obtained. ---")
     try:
-        # Sentiment analysis
-        sentiment_results = await analyzer.analyze_news_sentiment(request.company_data.news)
-        
-        # Weekly insights
-        insights = await analyzer.generate_weekly_insights(request.company_data)
-        
+        sentiment_results = await local_analyzer.analyze_news_sentiment(request.company_data.news)
+        insights = await local_analyzer.generate_weekly_insights(request.company_data)
         return {
             "success": True,
             "data": {
@@ -294,9 +303,12 @@ async def full_analysis(request: AIAnalysisRequest):
             }
         }
     except Exception as e:
+        print(f"--- full_analysis: ERROR during analysis: {str(e)} ---")
+        if isinstance(e, HTTPException):
+            raise e
         raise HTTPException(status_code=500, detail=f"Full analysis failed: {str(e)}")
 
-print("--- Python script ai_service.py LOADED ---")
+print("--- Python script ai_service.py LOADED (with on-demand analyzer init) ---")
 
 # if __name__ == "__main__":
 #     import uvicorn

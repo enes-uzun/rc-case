@@ -10,10 +10,17 @@
       "src": "api/test.py",
       "use": "@vercel/python",
       "config": { "runtime": "python3.9" }
+    },
+    {
+      "src": "api/ai_service.py",
+      "use": "@vercel/python",
+      "config": { "runtime": "python3.9" }
     }
   ],
   "routes": [
     { "src": "/api/test", "dest": "/api/test.py" },
+    { "src": "/api/ai/(.*)", "dest": "/api/ai_service.py" },
+    { "src": "/", "dest": "/api/ai_service.py" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 } 

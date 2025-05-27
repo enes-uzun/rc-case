@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 
@@ -62,7 +62,7 @@ export function AIInsights({ companyData, theme = 'blue' }: AIInsightsProps) {
     setError(null);
     
     try {
-      const response = await fetch('http://localhost:8001/api/ai/generate-insights', {
+      const response = await fetch('/api/ai/generate-insights', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

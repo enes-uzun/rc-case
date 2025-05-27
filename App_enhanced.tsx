@@ -293,41 +293,8 @@ function MetricCard({ title, value, subtitle, color }: {
   );
 }
 
-function NewsCard({ news, theme }: { news: NewsItem; theme: 'blue' | 'green' }) {
-  const linkColor = theme === 'blue' ? 'text-blue-600 hover:text-blue-800' : 'text-green-600 hover:text-green-800';
-  
-  return (
-    <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-      <div className="flex items-start justify-between mb-2">
-        <h3 className="font-medium text-lg leading-tight flex-1">
-          <a 
-            href={news.link} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className={linkColor}
-          >
-            {news.title}
-          </a>
-        </h3>
-        <Badge variant="outline" className="ml-2 shrink-0">
-          {news.source}
-        </Badge>
-      </div>
-      <p className="text-gray-600 text-sm mb-2 line-clamp-2">{news.snippet}</p>
-      <div className="flex items-center justify-between">
-        <p className="text-xs text-gray-400">{news.date}</p>
-        <a 
-          href={news.link} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-xs text-blue-500 hover:underline"
-        >
-          Devamını oku →
-        </a>
-      </div>
-    </div>
-  );
-}
+
+
 
 function CompetitorCard({ competitor, theme }: { competitor: CompetitorData; theme: 'blue' | 'green' }) {
   const [isExpanded, setIsExpanded] = React.useState(false);

@@ -283,10 +283,10 @@ async def full_analysis(request: AIAnalysisRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Full analysis failed: {str(e)}")
 
-if __name__ == "__main__":
-    import uvicorn
-    print("🚀 Starting Competitor AI Analysis Service...")
-    print("💡 Make sure to set OPENAI_API_KEY environment variable")
-    print("🌐 API will be available at: http://localhost:8001")
-    print("📚 Documentation at: http://localhost:8001/docs")
-    uvicorn.run(app, host="0.0.0.0", port=8001) 
+# if __name__ == "__main__":
+#     import uvicorn
+#     print("🚀 Starting Competitor AI Analysis Service...")
+#     print("💡 Make sure to set OPENAI_API_KEY environment variable")
+#     print("🌐 API will be available at: http://localhost:8001")
+#     print("📚 Documentation at: http://localhost:8001/docs")
+#     uvicorn.run(app, host="0.0.0.0", port=8001) 

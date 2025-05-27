@@ -1,21 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Badge } from "../ui/badge";
-
-interface NewsItem {
-  title: string;
-  link: string;
-  snippet: string;
-  date: string;
-  source: string;
-}
-
-interface NewsWithSentiment extends NewsItem {
-  sentiment?: 'positive' | 'negative' | 'neutral';
-  confidence?: number;
-  impact_score?: number;
-  key_insight?: string;
-  business_relevance?: 'high' | 'medium' | 'low';
-}
+import type { NewsItem, NewsWithSentiment } from '../../utils/aiUtils';
 
 interface AIEnhancedNewsCardProps {
   news: NewsItem;
@@ -61,7 +46,7 @@ export function AIEnhancedNewsCard({ news, theme = 'blue', enableAI = true }: AI
     setError(null);
     
     try {
-      const response = await fetch('http://localhost:8001/api/ai/analyze-sentiment', {
+      const response = await fetch('/api/ai/analyze-sentiment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -101,8 +86,6 @@ export function AIEnhancedNewsCard({ news, theme = 'blue', enableAI = true }: AI
       analyzeNews();
     }
   }, [news.title, enableAI]);
-
-  const displayNews = aiAnalysis || news;
 
   return (
     <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
@@ -225,37 +208,37 @@ export function AIEnhancedNewsCard({ news, theme = 'blue', enableAI = true }: AI
 }
 
 // Bulk sentiment analysis for multiple news
-export async function bulkAnalyzeNews(newsItems: NewsItem[]): Promise<NewsWithSentiment[]> {
-  try {
-    const response = await fetch('http://localhost:8001/api/ai/analyze-sentiment', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newsItems)
-    });
+// export async function bulkAnalyzeNews(newsItems: NewsItem[]): Promise<NewsWithSentiment[]> {
+//   try {
+//     const response = await fetch('/api/ai/analyze-sentiment', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(newsItems)
+//     });
     
-    if (!response.ok) {
-      throw new Error(`AI Service Error: ${response.status}`);
-    }
+//     if (!response.ok) {
+//       throw new Error(`AI Service Error: ${response.status}`);
+//     }
     
-    const result = await response.json();
+//     const result = await response.json();
     
-    if (result.success) {
-      return result.data;
-    } else {
-      throw new Error('Bulk sentiment analysis failed');
-    }
+//     if (result.success) {
+//       return result.data;
+//     } else {
+//       throw new Error('Bulk sentiment analysis failed');
+//     }
     
-  } catch (error) {
-    console.error('Bulk sentiment analysis error:', error);
-    return newsItems.map(news => ({
-      ...news,
-      sentiment: 'neutral' as const,
-      confidence: 0.5,
-      impact_score: 5,
-      key_insight: 'Analiz edilemedi',
-      business_relevance: 'medium' as const
-    }));
-  }
-} 
+//   } catch (error) {
+//     console.error('Bulk sentiment analysis error:', error);
+//     return newsItems.map(news => ({
+//       ...news,
+//       sentiment: 'neutral' as const,
+//       confidence: 0.5,
+//       impact_score: 5,
+//       key_insight: 'Analiz edilemedi',
+//       business_relevance: 'medium' as const
+//     }));
+//   }
+// } 
